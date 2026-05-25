@@ -95,4 +95,4 @@ const AssignmentSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export const Assignment = mongoose.model<IAssignment>('Assignment', AssignmentSchema);
+export const Assignment = mongoose.models.Assignment || mongoose.model<IAssignment>('Assignment', AssignmentSchema);

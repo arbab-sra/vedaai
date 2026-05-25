@@ -13,7 +13,7 @@ export default function AssignmentsPage() {
     const fetchAssignments = async (isFirstLoad = false) => {
       if (isFirstLoad) setIsLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/assignments`);
+        const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments`);
         const data = await res.json();
         if (data.success) {
           setAssignments(data.data);
@@ -48,7 +48,7 @@ export default function AssignmentsPage() {
     if (!confirm('Are you sure you want to delete this assignment?')) return;
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/assignments/${id}`, {
+      const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {

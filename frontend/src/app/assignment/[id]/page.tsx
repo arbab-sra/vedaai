@@ -16,7 +16,7 @@ export default function AssignmentResultPage() {
 
     const fetchAssignment = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/assignments/${id}`);
+        const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments/${id}`);
         const data = await res.json();
         if (data.success) {
           setAssignment(data.data);
