@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { api } from '@/lib/api';
 import { Label } from '@/components/ui/label';
 
 export default function OnboardingPage() {
@@ -18,13 +19,9 @@ export default function OnboardingPage() {
     setIsSubmitting(true);
     
     try {
-      const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/profile`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fullName, organizationName, occupation }),
-      });
-      
-      if (res.ok) {
+      const data = await api.createProfile({ fullName, organizationName, occupation });
+
+      if (data.success) {
         router.push('/');
       }
     } catch (error) {

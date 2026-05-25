@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Search, Filter, Trash2, Plus, ArrowLeft, MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/lib/store';
+import { api } from '@/lib/api';
 export default function AssignmentsPage() {
   const { assignments, setAssignments, isLoading, setIsLoading } = useAppStore();
 
@@ -13,8 +14,7 @@ export default function AssignmentsPage() {
     const fetchAssignments = async (isFirstLoad = false) => {
       if (isFirstLoad) setIsLoading(true);
       try {
-        const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments`);
-        const data = await res.json();
+        const data = await api.getAssignments();
         if (data.success) {
           setAssignments(data.data);
         }
@@ -48,10 +48,8 @@ export default function AssignmentsPage() {
     if (!confirm('Are you sure you want to delete this assignment?')) return;
     
     try {
-      const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments/${id}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
+      const data = await api.deleteAssignment(id);
+      if (data.success) {
         setAssignments(assignments.filter(a => a._id !== id));
       }
     } catch (error) {

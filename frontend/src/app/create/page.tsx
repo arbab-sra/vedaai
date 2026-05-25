@@ -11,6 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { api } from '@/lib/api';
 
 interface QuestionTypeConfig {
   id: string;
@@ -102,12 +103,8 @@ export default function CreateAssignmentPage() {
         formData.append('file', file);
       }
 
-      const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments`, {
-        method: 'POST',
-        body: formData,
-      });
+      const data = await api.createAssignment(formData);
 
-      const data = await res.json();
       if (data.success) {
         router.push(`/assignment/${data.data._id}`);
       } else {

@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { Download, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { api } from '@/lib/api';
+
 export default function AssignmentResultPage() {
   const { id } = useParams();
   const [assignment, setAssignment] = useState<any>(null);
@@ -16,8 +18,7 @@ export default function AssignmentResultPage() {
 
     const fetchAssignment = async () => {
       try {
-        const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001').replace(/\\/+$/, '')}/api/assignments/${id}`);
-        const data = await res.json();
+        const data = await api.getAssignmentById(id as string);
         if (data.success) {
           setAssignment(data.data);
           
