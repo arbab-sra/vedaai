@@ -2,11 +2,14 @@
 
 VedaAI is an intelligent platform designed for teachers to effortlessly create and generate well-structured assessment papers using Artificial Intelligence.
 
+# DEPLOYMENT_URL = https://vedaai-phi.vercel.app/
+
 ## 🚀 Architecture Overview
 
 The system follows a modern full-stack architecture separated into two main parts:
 
 ### Frontend (Next.js)
+
 - **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4 + shadcn/ui for beautiful, accessible components.
@@ -15,6 +18,7 @@ The system follows a modern full-stack architecture separated into two main part
 - **PDF Generation:** Client-side HTML to PDF generation using `html2pdf.js`.
 
 ### Backend (Node.js/Express)
+
 - **Framework:** Express.js + Node.js
 - **Language:** TypeScript
 - **Database:** MongoDB (via Mongoose) to store assignment configurations and generated results.
@@ -34,17 +38,20 @@ The system follows a modern full-stack architecture separated into two main part
 ## 🛠️ Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v18+)
 - Docker (for local MongoDB & Redis)
 - A [Groq API Key](https://console.groq.com/)
 
 ### 1. Start Infrastructure
+
 Run the provided `docker-compose.yml` to spin up MongoDB and Redis locally.
 \`\`\`bash
 docker-compose up -d
 \`\`\`
 
 ### 2. Setup Backend
+
 \`\`\`bash
 cd backend
 npm install
@@ -59,10 +66,13 @@ GROQ_API_KEY=your_groq_api_key_here
 Start the development server:
 \`\`\`bash
 npm run dev
+
 # Note: You may need to add "dev": "nodemon src/index.ts" to package.json scripts
+
 \`\`\`
 
 ### 3. Setup Frontend
+
 \`\`\`bash
 cd frontend
 npm install
@@ -78,6 +88,7 @@ npm run dev
 \`\`\`
 
 ## 🌟 Bonus Features Implemented
+
 - **Caching Layer:** Redis cache layer for the backend endpoints ensures fast load times and minimal database load.
 - **PDF Export:** High-quality PDF generation retaining visual structure using `html2pdf.js`.
 - **Robust Background Processing:** BullMQ + Redis ensures reliability. The main API operates statelessly on Vercel, delegating long-running AI generation to robust workers.

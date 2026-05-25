@@ -19,7 +19,7 @@ import profileRoutes from "./routes/profile.routes";
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/profile", profileRoutes);
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.redirect("https://vedaai-phi.vercel.app/");
 });
 const PORT = process.env.PORT || 5001;
 
