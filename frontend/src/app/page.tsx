@@ -27,21 +27,21 @@ export default function AssignmentsPage() {
 
     fetchAssignments(true);
 
-    const hasActiveAssignments = useAppStore.getState().assignments.some(
-      a => ['PENDING', 'EXTRACTING_TEXT', 'GENERATING'].includes(a.status)
-    );
-
     // Only poll if there are active assignments being generated
-    if (hasActiveAssignments) {
-      pollInterval = setInterval(() => {
+    pollInterval = setInterval(() => {
+      const currentAssignments = useAppStore.getState().assignments;
+      const hasActive = currentAssignments.some(
+        a => ['PENDING', 'EXTRACTING_TEXT', 'GENERATING'].includes(a.status)
+      );
+      if (hasActive) {
         fetchAssignments(false);
-      }, 3000);
-    }
+      }
+    }, 3000);
 
     return () => {
       if (pollInterval) clearInterval(pollInterval);
     };
-  }, [setAssignments, setIsLoading, assignments]);
+  }, [setAssignments, setIsLoading]);
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.preventDefault(); // prevent triggering the Link
